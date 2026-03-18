@@ -1,0 +1,68 @@
+Metadata-Version: 2.4
+Name: npy2pointcloud
+Version: 0.1.0
+Summary: Convert Rohbau3D .npy point cloud files to standard formats (PLY, PCD, LAS)
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: numpy>=1.24
+Requires-Dist: open3d>=0.17
+Requires-Dist: click>=8.0
+Requires-Dist: laspy[laszip]>=2.4
+
+# npy2pointcloud
+
+Convert Rohbau3D `.npy` point cloud files to standard formats (PLY, PCD, LAS).
+
+## Rohbau3D format
+
+Each scene directory contains:
+
+| File | Shape | Description |
+|------|-------|-------------|
+| `coord.npy` | (N, 3) float | XYZ coordinates (required) |
+| `color.npy` | (N, 3) | RGB values |
+| `intensity.npy` | (N, 1) | Laser reflectance |
+| `normal.npy` | (N, 3) | Surface normals |
+
+## Installation
+
+```bash
+pip install -e .
+```
+
+## Usage
+
+### Convert a single scene
+
+```bash
+npy2pointcloud convert -i /path/to/scene -o output.ply -f ply
+npy2pointcloud convert -i /path/to/scene -o output.las -f las
+npy2pointcloud convert -i /path/to/scene -o output.pcd -f pcd
+```
+
+### Show point cloud info
+
+```bash
+npy2pointcloud info -i /path/to/scene
+```
+
+### Batch convert an entire dataset
+
+```bash
+npy2pointcloud batch -i /path/to/dataset -o /path/to/output -f ply
+npy2pointcloud batch -i /path/to/dataset -o /path/to/output -f las --flatten
+```
+
+## Python API
+
+```python
+from npy2pointcloud.loader import load_scene
+from npy2pointcloud.converter import convert
+
+data = load_scene("/path/to/scene")
+print(data.summary())
+
+convert(data, "output.ply", "ply")
+convert(data, "output.las", "las")
+```
