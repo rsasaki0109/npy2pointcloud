@@ -1,5 +1,8 @@
+.gitignore
+LICENSE
 README.md
 pyproject.toml
+.github/workflows/ci.yml
 src/npy2pointcloud/__init__.py
 src/npy2pointcloud/batch.py
 src/npy2pointcloud/cli.py
@@ -11,3 +14,12 @@ src/npy2pointcloud.egg-info/dependency_links.txt
 src/npy2pointcloud.egg-info/entry_points.txt
 src/npy2pointcloud.egg-info/requires.txt
 src/npy2pointcloud.egg-info/top_level.txt
+src/npy2pointcloud/__pycache__/__init__.cpython-312.pyc
+src/npy2pointcloud/__pycache__/cli.cpython-312.pyc
+src/npy2pointcloud/__pycache__/converter.cpython-312.pyc
+src/npy2pointcloud/__pycache__/loader.cpython-312.pyc
+tests/__init__.py
+tests/conftest.py
+tests/test_cli.py
+tests/test_converter.py
+tests/test_loader.py

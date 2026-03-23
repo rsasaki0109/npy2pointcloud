@@ -47,16 +47,23 @@ def main(verbose: bool) -> None:
 )
 def convert(input_dir: Path, output: Path, fmt: str) -> None:
     """Convert a single Rohbau3D scene to a point cloud file."""
+    import time
+
     from .converter import convert as do_convert
     from .loader import load_scene
 
     click.echo(f"Loading scene from {input_dir} ...")
+    t0 = time.monotonic()
     data = load_scene(input_dir)
-    click.echo(f"  {data.num_points:,} points loaded")
+    t_load = time.monotonic() - t0
+    click.echo(f"  {data.num_points:,} points loaded ({t_load:.1f}s)")
 
     click.echo(f"Converting to {fmt.upper()} ...")
+    t0 = time.monotonic()
     result = do_convert(data, output, fmt)
-    click.echo(f"  Written to {result}")
+    t_conv = time.monotonic() - t0
+    size_mb = result.stat().st_size / 1024 / 1024
+    click.echo(f"  Written to {result} ({size_mb:.1f} MB, {t_conv:.1f}s)")
 
 
 @main.command()
